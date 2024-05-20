@@ -29,7 +29,12 @@ const HomePage = () => {
               setShowNav((pre) => !pre);
             }}
           >
-            <img src={assets.icons.menuB} alt="menu" height={20} width={20} />
+            <img
+              src={assets.icons.menuOutB}
+              alt="menu"
+              height={20}
+              width={20}
+            />
           </button>
           Xencia
         </div>

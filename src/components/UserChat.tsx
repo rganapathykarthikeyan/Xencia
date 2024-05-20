@@ -1,4 +1,8 @@
+import { useEffect, useState } from "react";
 import { assets } from "../assets";
+import { RootState } from "../store/store";
+import { useSelector } from "react-redux";
+import { cn } from "../lib/utils";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type UserChatProps = {
@@ -6,10 +10,22 @@ type UserChatProps = {
 };
 
 const UserChat = (props: UserChatProps) => {
+  const [isDark, setIsDark] = useState(false);
+  const theme = useSelector((state: RootState) => state.theme);
+
+  useEffect(() => {
+    setIsDark(theme.theme === "dark");
+  }, [theme]);
+
   return (
     <div className="flex w-full flex-row justify-end gap-2">
       <div className="max-w-[420px] flex flex-col">
-        <div className="bg-blueBg text-white p-4 rounded-l-3xl rounded-se-3xl">
+        <div
+          className={cn("p-4 rounded-l-3xl rounded-se-3xl", {
+            "bg-blueBg text-white": !isDark,
+            "bg-chatDark text-black": isDark,
+          })}
+        >
           {props.chat.data}
         </div>
       </div>

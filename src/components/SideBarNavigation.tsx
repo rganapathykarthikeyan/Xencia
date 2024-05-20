@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { assets } from "../assets";
 import { cn } from "../lib/utils";
 import { ChatListTitleHistory } from "../lib/constants";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Switch } from "./ui/switch";
+import { toggleTheme } from "../store/themeSlice";
 
 type SideBarNavigationProps = {
   hideNav?: () => void;
@@ -11,16 +16,28 @@ type SideBarNavigationProps = {
 const SideBarNavigation = (props: SideBarNavigationProps) => {
   const [collapse, setCollapse] = useState(false);
   const [list] = useState(ChatListTitleHistory);
+  const [isDark, setIsDark] = useState(false);
+  const theme = useSelector((state: RootState) => state.theme);
+  const dispatch = useDispatch();
   const todayList = list.filter((data) => data.timeStamp === "Today");
   const lastWeekList = list.filter((data) => data.timeStamp === "Last week");
   const lastMonth = list.filter((data) => data.timeStamp === "Last Month");
+  const route = useNavigate();
+
+  useEffect(() => {
+    setIsDark(theme.theme === "dark");
+  }, [theme]);
+
   return (
     <div
       className={cn(
-        "bg-gradient-to-t z-50 from-NavGradiantStart duration-300 via-NavGradiantMid to-NavGradiantEnd h-full font-sand text-white relative flex flex-col justify-between",
+        " duration-300 z-50 h-full font-sand text-white relative flex flex-col justify-between",
         {
           "w-[200px] md:w-[260px]": collapse === false,
           "w-[65px]": collapse === true,
+          "bg-darkModeSide": isDark,
+          "bg-gradient-to-t from-NavGradiantStart via-NavGradiantMid to-NavGradiantEnd":
+            !isDark,
         }
       )}
     >
@@ -32,10 +49,16 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
         })}
       >
         <div
-          className={cn("flex flex-grow items-center justify-center", {
-            "p-5": !collapse,
-            "py-5": collapse,
-          })}
+          className={cn(
+            "flex flex-grow items-center justify-center cursor-pointer",
+            {
+              "p-5": !collapse,
+              "py-5": collapse,
+            }
+          )}
+          onClick={() => {
+            route("/");
+          }}
         >
           {!collapse ? (
             <img
@@ -65,7 +88,7 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
               setCollapse((pre) => !pre);
             }}
           >
-            <img src={assets.icons.menu} alt="menu" height={20} width={20} />
+            <img src={assets.icons.menuOut} alt="menu" height={20} width={20} />
           </button>
         </div>
         <div
@@ -205,14 +228,31 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
               Premium Member
             </span>
           </div>
-          <div className="flex items-center justify-center">
-            <img
-              src={assets.icons.gear}
-              alt="settings"
-              height={24}
-              width={24}
-            />
-          </div>
+          <Popover>
+            <PopoverTrigger>
+              <div className="flex items-center justify-center">
+                <img
+                  src={assets.icons.gear}
+                  alt="settings"
+                  height={24}
+                  width={24}
+                />
+              </div>
+            </PopoverTrigger>
+            <PopoverContent className="w-fit">
+              <div className="flex flex-row gap-3 items-center">
+                Dark Mode:
+                <Switch
+                  id="theme"
+                  className="border border-greyText2"
+                  checked={theme.theme === "dark"}
+                  onCheckedChange={() => {
+                    dispatch(toggleTheme());
+                  }}
+                />
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
       </section>
     </div>

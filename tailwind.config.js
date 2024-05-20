@@ -13,7 +13,9 @@ export default {
         titleBlue: "#1E66AE",
         greyText: "#212121",
         greyText2: "#666666",
-        blueBg: "#1875F0"
+        blueBg: "#1875F0",
+        darkModeSide: "#2F2F2F",
+        chatDark: "#DCE4E9"
       },
       backgroundImage: {
         backgroundImg: "url('/images/bg-small.svg')"

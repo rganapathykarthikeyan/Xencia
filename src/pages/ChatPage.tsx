@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { assets } from "../assets";
 import ChatSection from "../components/ChatSection";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import SideBarNavigation from "../components/SideBarNavigation";
 import { cn } from "../lib/utils";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 const ChatPage = () => {
   const [showNav, setShowNav] = useState(false);
+  const [isDark, setIsDark] = useState(false);
+  const theme = useSelector((state: RootState) => state.theme);
+
+  useEffect(() => {
+    setIsDark(theme.theme === "dark");
+  }, [theme]);
 
   const hideShowNav = () => {
     setShowNav(false);
@@ -29,10 +37,15 @@ const ChatPage = () => {
             setShowNav((pre) => !pre);
           }}
         >
-          <img src={assets.icons.menuB} alt="menu" height={20} width={20} />
+          <img src={assets.icons.menuOutB} alt="menu" height={20} width={20} />
         </button>
         <div className="flex flex-col">
-          <span className="text-titleBlue text-xl font-bold">
+          <span
+            className={cn(" text-xl font-bold", {
+              "text-titleBlue": !isDark,
+              "text-black": isDark,
+            })}
+          >
             Add cash agent
           </span>
           <span className="text-greyText text-sm">

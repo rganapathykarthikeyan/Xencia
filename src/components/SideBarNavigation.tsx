@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 
 const SideBarNavigation = () => {
   const [collapse, setCollapse] = useState(false);
-  const [list, setList] = useState(ChatListTitleHistory);
+  const [list] = useState(ChatListTitleHistory);
   const todayList = list.filter((data) => data.timeStamp === "Today");
   const lastWeekList = list.filter((data) => data.timeStamp === "Last week");
   const lastMonth = list.filter((data) => data.timeStamp === "Last Month");

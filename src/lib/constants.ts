@@ -1,5 +1,3 @@
-import { timeStamp } from "console";
-
 export const ChatListTitleHistory = [
   {
     id: "32167asdf",

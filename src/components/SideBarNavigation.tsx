@@ -4,7 +4,11 @@ import { cn } from "../lib/utils";
 import { ChatListTitleHistory } from "../lib/constants";
 import { NavLink } from "react-router-dom";
 
-const SideBarNavigation = () => {
+type SideBarNavigationProps = {
+  hideNav?: () => void;
+};
+
+const SideBarNavigation = (props: SideBarNavigationProps) => {
   const [collapse, setCollapse] = useState(false);
   const [list] = useState(ChatListTitleHistory);
   const todayList = list.filter((data) => data.timeStamp === "Today");
@@ -13,9 +17,9 @@ const SideBarNavigation = () => {
   return (
     <div
       className={cn(
-        "bg-gradient-to-t from-NavGradiantStart via-NavGradiantMid to-NavGradiantEnd h-full font-sand text-white relative flex flex-col justify-between",
+        "bg-gradient-to-t z-50 from-NavGradiantStart duration-300 via-NavGradiantMid to-NavGradiantEnd h-full font-sand text-white relative flex flex-col justify-between",
         {
-          "w-[260px]": collapse === false,
+          "w-[200px] md:w-[260px]": collapse === false,
           "w-[65px]": collapse === true,
         }
       )}
@@ -71,10 +75,16 @@ const SideBarNavigation = () => {
           })}
         >
           <button
-            className="w-full flex justify-center"
+            className="w-full hidden md:flex justify-center"
             onClick={() => {
               setCollapse((pre) => !pre);
             }}
+          >
+            <img src={assets.icons.menu} alt="menu" height={20} width={20} />
+          </button>
+          <button
+            className="w-full flex md:hidden justify-center"
+            onClick={props.hideNav}
           >
             <img src={assets.icons.menu} alt="menu" height={20} width={20} />
           </button>
@@ -96,7 +106,9 @@ const SideBarNavigation = () => {
                 to={"/c/" + data.id}
                 key={data.id}
                 className={({ isActive }) =>
-                  isActive ? "text-base font-bold" : "text-base"
+                  isActive
+                    ? "text-xs md:text-base font-bold"
+                    : "text-xs md:text-base"
                 }
               >
                 {data.name}
@@ -112,7 +124,9 @@ const SideBarNavigation = () => {
                 to={"/c/" + data.id}
                 key={data.id}
                 className={({ isActive }) =>
-                  isActive ? "text-base font-bold" : "text-base"
+                  isActive
+                    ? "text-xs md:text-base font-bold"
+                    : "text-xs md:text-base"
                 }
               >
                 {data.name}
@@ -128,7 +142,9 @@ const SideBarNavigation = () => {
                 to={"/c/" + data.id}
                 key={data.id}
                 className={({ isActive }) =>
-                  isActive ? "text-base font-bold" : "text-base"
+                  isActive
+                    ? "text-xs md:text-base font-bold"
+                    : "text-xs md:text-base"
                 }
               >
                 {data.name}
@@ -148,7 +164,11 @@ const SideBarNavigation = () => {
           })}
         >
           <img src={assets.icons.help} alt="help" height={36} width={36} />
-          <span className={cn("font-sand text-xs", { hidden: collapse })}>
+          <span
+            className={cn("font-sand text-[10px] md:text-xs", {
+              hidden: collapse,
+            })}
+          >
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum
             dolor sit.
           </span>
@@ -180,8 +200,10 @@ const SideBarNavigation = () => {
               flex: !collapse,
             })}
           >
-            <span className="text-sm">Kate Smile</span>
-            <span className="text-xs text-[#FFFFFFBF]">Premium Member</span>
+            <span className="text-xs md:text-sm">Kate Smile</span>
+            <span className="text-[10px] md:text-xs text-[#FFFFFFBF]">
+              Premium Member
+            </span>
           </div>
           <div className="flex items-center justify-center">
             <img

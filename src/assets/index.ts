@@ -7,6 +7,7 @@ export const assets = {
   },
   icons: {
     menu: "/icons/menu.svg",
+    menuB: "/icons/menuBlack.svg",
     help: "/icons/help.svg",
     gear: "/icons/gear.svg",
     like: "/icons/like.svg",

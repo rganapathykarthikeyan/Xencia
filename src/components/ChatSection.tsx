@@ -6,12 +6,12 @@ import { Button } from "./ui/button";
 
 const ChatSection = () => {
   return (
-    <section className="h-full w-full px-52 font-sand text-sm flex flex-col gap-10 p-5">
+    <section className="h-full w-full md:px-52 font-sand text-sm flex flex-col gap-10 p-5">
       {ChatHistoryDemoData.map((chat) => {
         if (chat.type === "User") {
-          return <UserChat chat={chat} />;
+          return <UserChat chat={chat} key={chat.id} />;
         } else {
-          return <BotChat chat={chat} />;
+          return <BotChat chat={chat} key={chat.id} />;
         }
       })}
       <div className="p-10 flex justify-center items-center">

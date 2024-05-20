@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { assets } from "../assets";
+import { Button } from "./ui/button";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type BotChatProps = {
@@ -33,14 +34,20 @@ const BotChat = (props: BotChatProps) => {
         </div>
         {showOptions && (
           <div className="flex flex-row w-full justify-end">
-            <img src={assets.icons.volume} height={24} width={24} alt="vol" />
-            <img src={assets.icons.copy} height={20} width={20} alt="copy" />
-            <img
-              src={assets.icons.dislike}
-              height={20}
-              width={20}
-              alt="dislike"
-            />
+            <Button variant={"transparent"} size={"iconSmall"}>
+              <img src={assets.icons.volume} height={24} width={24} alt="vol" />
+            </Button>
+            <Button variant={"transparent"} size={"iconSmall"}>
+              <img src={assets.icons.copy} height={20} width={20} alt="copy" />
+            </Button>
+            <Button variant={"transparent"} size={"iconSmall"}>
+              <img
+                src={assets.icons.dislike}
+                height={20}
+                width={20}
+                alt="dislike"
+              />
+            </Button>
           </div>
         )}
       </div>

@@ -44,19 +44,19 @@ const ChatPage = () => {
         <ChatSection />
       </div>
       <section className="bg-white flex-row flex gap-1 p-3 w-full items-center justify-center">
-        <div className="lg:min-w-[860px] min-w-full flex flex-row py-5 items-center gap-4">
+        <div className="lg:min-w-[860px] min-w-full flex flex-row py-2 md:py-5 items-center gap-4">
           <div className="flex flex-row">
             <div>
               <img
                 src={assets.images.avatar}
                 alt="profilePic"
-                className="h-auto w-12"
+                className="h-auto w-10 md:w-12"
                 height={40}
                 width={40}
               />
             </div>
           </div>
-          <div className="flex flex-grow">
+          <div className="flex flex-grow font-sand">
             <Input
               type="text"
               placeholder="Type your text here"
@@ -66,7 +66,7 @@ const ChatPage = () => {
           <div>
             <Button
               variant={"blue"}
-              className="py-2 px-2 md:py-6 md:px-7 rounded-full"
+              className="py-3 px-4 md:py-6 md:px-7 rounded-full"
             >
               SEND
             </Button>

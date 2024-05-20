@@ -7,7 +7,7 @@ const RootLayout = () => {
       <aside>
         <SideBarNavigation />
       </aside>
-      <div className="h-full w-full overflow-y-scroll">
+      <div className="h-full w-full">
         <Outlet />
       </div>
     </div>

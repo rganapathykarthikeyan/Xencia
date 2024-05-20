@@ -3,10 +3,15 @@ export const assets = {
     XenciaL: "/images/XenciaLogoLarge.png",
     XenciaS: "/images/XenciaLogoSmall.png",
     avatar: "/images/avatar.png",
+    bot: "/images/bot.png",
   },
   icons: {
     menu: "/icons/menu.svg",
     help: "/icons/help.svg",
     gear: "/icons/gear.svg",
+    like: "/icons/like.svg",
+    dislike: "/icons/dislike.svg",
+    copy: "/icons/copy.svg",
+    volume: "/icons/volume.svg",
   },
 };

@@ -9,8 +9,15 @@ export default {
         NavGradiantStart: "#1F922B",
         NavGradiantMid: "#3B7DB9",
         NavGradiantEnd: "#143A8E",
-        statusGreen: "#00D408"
-      }
+        statusGreen: "#00D408",
+        titleBlue: "#1E66AE",
+        greyText: "#212121",
+        greyText2: "#666666",
+        blueBg: "#1875F0"
+      },
+      backgroundImage: {
+        backgroundImg: "url('/images/bg-small.svg')"
+      },
     },
     fontFamily: {
       sand: ["QuickSand", "sans-serif"],

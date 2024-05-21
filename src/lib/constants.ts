@@ -1,27 +1,27 @@
 export const ChatListTitleHistory = [
   {
     id: "32167asdf",
-    name: "Lorem ipsum dolor sit",
-    timeStamp: "Today",
-  },
-  {
-    id: "32167awv",
-    name: "Registration",
-    timeStamp: "Today",
-  },
-  {
-    id: "32167ageew",
     name: "Add cash agent",
     timeStamp: "Today",
   },
   {
+    id: "32167awv",
+    name: "Conversations",
+    timeStamp: "Today",
+  },
+  {
+    id: "32167ageew",
+    name: "Registration",
+    timeStamp: "Today",
+  },
+  {
     id: "32167hwaaf",
-    name: "Bulk case registration",
+    name: "Bulk cases registration",
     timeStamp: "Last week",
   },
   {
     id: "32167bwqf",
-    name: "Registration",
+    name: "Downloads",
     timeStamp: "Last week",
   },
   {

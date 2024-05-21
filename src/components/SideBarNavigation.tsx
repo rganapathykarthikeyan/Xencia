@@ -188,12 +188,14 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
         >
           <img src={assets.icons.help} alt="help" height={36} width={36} />
           <span
-            className={cn("font-sand text-[10px] md:text-xs", {
-              hidden: collapse,
-            })}
+            className={cn(
+              "font-sand text-[10px] md:text-xs flex items-center",
+              {
+                hidden: collapse,
+              }
+            )}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum
-            dolor sit.
+            Help
           </span>
         </div>
         <div

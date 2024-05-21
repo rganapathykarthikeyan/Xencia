@@ -23,7 +23,7 @@ const ChatPage = () => {
   return (
     <div className="w-full h-full flex flex-col bg-backgroundImg bg-opacity-50">
       <div
-        className={cn("fixed top-0 h-screen bg-white duration-300 z-10", {
+        className={cn("fixed top-0 h-svh bg-white duration-300 z-10", {
           "left-0": showNav === true,
           " left-[-100%]": showNav === false,
         })}
@@ -48,9 +48,9 @@ const ChatPage = () => {
           >
             Add cash agent
           </span>
-          <span className="text-greyText text-sm">
-            Lorem ipsum dolor sit amet
-          </span>
+          <a href="mailto:support@xencia.com" className="text-greyText text-sm">
+            support@xencia.com
+          </a>
         </div>
       </section>
       <div className="bg-[#d3e2ec8f] w-full flex-grow flex flex-col justify-between overflow-y-scroll">

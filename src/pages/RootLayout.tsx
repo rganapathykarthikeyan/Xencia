@@ -3,7 +3,7 @@ import SideBarNavigation from "../components/SideBarNavigation";
 
 const RootLayout = () => {
   return (
-    <div className="flex flex-row h-screen w-full">
+    <div className="flex flex-row h-svh w-full">
       <aside className="h-full hidden md:flex">
         <SideBarNavigation />
       </aside>

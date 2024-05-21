@@ -14,10 +14,13 @@ const HomePage = () => {
   return (
     <div className="w-full h-full flex flex-col bg-backgroundImg bg-opacity-50 ">
       <div
-        className={cn("fixed top-0 h-svh bg-white duration-300 z-10", {
-          "left-0": showNav === true,
-          " left-[-100%]": showNav === false,
-        })}
+        className={cn(
+          "fixed top-0 h-svh md:h-screen bg-white duration-300 z-10",
+          {
+            "left-0": showNav === true,
+            " left-[-100%]": showNav === false,
+          }
+        )}
       >
         <SideBarNavigation hideNav={hideShowNav} />
       </div>

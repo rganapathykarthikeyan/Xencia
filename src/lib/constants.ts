@@ -17,17 +17,17 @@ export const ChatListTitleHistory = [
   {
     id: "32167hwaaf",
     name: "Bulk cases registration",
-    timeStamp: "Last week",
+    timeStamp: "Previously",
   },
   {
     id: "32167bwqf",
     name: "Downloads",
-    timeStamp: "Last week",
+    timeStamp: "Previously",
   },
   {
     id: "32167qwertf",
     name: "New to this",
-    timeStamp: "Last Month",
+    timeStamp: "Help",
   },
 ];
 

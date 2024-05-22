@@ -20,8 +20,8 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
   const theme = useSelector((state: RootState) => state.theme);
   const dispatch = useDispatch();
   const todayList = list.filter((data) => data.timeStamp === "Today");
-  const lastWeekList = list.filter((data) => data.timeStamp === "Last week");
-  const lastMonth = list.filter((data) => data.timeStamp === "Last Month");
+  const lastWeekList = list.filter((data) => data.timeStamp === "Previously");
+  const lastMonth = list.filter((data) => data.timeStamp === "Help");
   const route = useNavigate();
 
   useEffect(() => {
@@ -140,7 +140,7 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
           })}
         </div>
         <div className="flex flex-col gap-3">
-          <span className="text-xs font-bold">LAST WEEK</span>
+          <span className="text-xs font-bold">PREVIOUSLY</span>
           {lastWeekList.map((data) => {
             return (
               <NavLink
@@ -158,7 +158,7 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
           })}
         </div>
         <div className="flex flex-col gap-3">
-          <span className="text-xs font-bold">LAST MONTH</span>
+          <span className="text-xs font-bold">HELP</span>
           {lastMonth.map((data) => {
             return (
               <NavLink

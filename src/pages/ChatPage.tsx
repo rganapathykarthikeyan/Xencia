@@ -21,6 +21,8 @@ const ChatPage = () => {
   const [disabled, setDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  console.log(chatList, findChatIndexbyID, Chat, id);
+
   const [text, setText] = useState("");
 
   const onChangeChat = (e: ChangeEvent<HTMLInputElement>) => {

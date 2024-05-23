@@ -188,8 +188,8 @@ const HomePage = () => {
             </div>
           </section>
           <div className="bg-[#d3e2ec8f] w-full flex-grow flex flex-col overflow-y-scroll">
-            <div className="my-3">
-              <section className="h-full w-full md:px-52 font-sand text-sm flex flex-col gap-10 p-5 mb-5">
+            <div className="my-1">
+              <section className="h-full w-full md:px-52 font-sand text-sm flex flex-col gap-10 p-2">
                 {chatHistory.map((chat) => {
                   if (chat.type === "User") {
                     return <UserChat chat={chat} key={chat.id} />;

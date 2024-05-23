@@ -42,7 +42,7 @@ const HomePage = () => {
     let botText: string;
     const curHistory = chatHistory;
     curHistory.push({
-      id: Math.floor(Math.random()).toString(),
+      id: Math.floor(Math.random() * 3216549876541).toString(),
       type: "User",
       data: text,
       timeStamp: new Date().toLocaleTimeString("en-GB"),
@@ -70,17 +70,16 @@ const HomePage = () => {
         // dispatch(addNewChat({ user: text, bot: botText }));
         const curHistory = chatHistory;
         curHistory.push({
-          id: Math.floor(Math.random()).toString(),
+          id: Math.floor(Math.random() * 321517654).toString(),
           type: "Bot",
           data: botText,
           timeStamp: new Date().toLocaleTimeString("en-GB"),
         });
         setChatHistory(curHistory);
-      })
-      .finally(() => {
         setIsLoading(false);
         setDisabled(false);
       });
+    console.log(curHistory);
   };
 
   const hideShowNav = () => {
@@ -154,7 +153,7 @@ const HomePage = () => {
               </a>
             </div>
           </section>
-          <div className="bg-[#d3e2ec8f] w-full flex-grow flex flex-col justify-between overflow-y-scroll">
+          <div className="bg-[#d3e2ec8f] w-full flex-grow flex flex-col justify-between overflow-y-scroll mb-10">
             <section className="h-full w-full md:px-52 font-sand text-sm flex flex-col gap-10 p-5">
               {chatHistory.map((chat) => {
                 if (chat.type === "User") {

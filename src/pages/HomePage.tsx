@@ -120,7 +120,7 @@ const HomePage = () => {
     setShowNav(false);
   };
   return (
-    <div className="w-full h-full flex flex-col bg-backgroundImg bg-opacity-50 ">
+    <div className="w-full h-full flex flex-col bg-backgroundImg bg-opacity-50">
       <div
         className={cn(
           "fixed top-0 h-svh md:h-screen bg-white duration-300 z-10",
@@ -187,49 +187,51 @@ const HomePage = () => {
               </a>
             </div>
           </section>
-          <div className="bg-[#d3e2ec8f] w-full flex-grow flex flex-col justify-between overflow-y-scroll pb-10">
-            <section className="h-full w-full md:px-52 font-sand text-sm flex flex-col gap-10 p-5 mb-5">
-              {chatHistory.map((chat) => {
-                if (chat.type === "User") {
-                  return <UserChat chat={chat} key={chat.id} />;
-                } else {
-                  return <BotChat chat={chat} key={chat.id} />;
-                }
-              })}
-              {isLoading && (
-                <div className="flex w-full flex-row justify-start gap-2">
-                  <div className="flex flex-col justify-end gap-1 items-center">
-                    <div className="flex items-center justify-center h-12 w-12 bg-[#D9D9D9] rounded-full">
-                      <img
-                        src={assets.images.XenciaS}
-                        alt="profilePic"
-                        className="h-auto w-8"
-                        height={30}
-                        width={30}
-                      />
+          <div className="bg-[#d3e2ec8f] w-full flex-grow flex flex-col overflow-y-scroll">
+            <div className="my-3">
+              <section className="h-full w-full md:px-52 font-sand text-sm flex flex-col gap-10 p-5 mb-5">
+                {chatHistory.map((chat) => {
+                  if (chat.type === "User") {
+                    return <UserChat chat={chat} key={chat.id} />;
+                  } else {
+                    return <BotChat chat={chat} key={chat.id} />;
+                  }
+                })}
+                {isLoading && (
+                  <div className="flex w-full flex-row justify-start gap-2">
+                    <div className="flex flex-col justify-end gap-1 items-center">
+                      <div className="flex items-center justify-center h-12 w-12 bg-[#D9D9D9] rounded-full">
+                        <img
+                          src={assets.images.XenciaS}
+                          alt="profilePic"
+                          className="h-auto w-8"
+                          height={30}
+                          width={30}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="max-w-[420px] flex flex-col">
-                    <div className="bg-white max-w-[420px] text-greyText2 p-4 rounded-r-3xl rounded-ss-3xl">
-                      <SyncLoader
-                        color={isDark ? "#1875F0" : "#000000"}
-                        size={10}
-                        speedMultiplier={0.7}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-              <div>
-                {isRefreshing && (
-                  <div className="p-10 flex justify-center items-center">
-                    <div className="bg-[#DCE4E9] px-8 py-1 rounded-3xl  flex flex-row items-center">
-                      <span>Refreshing...</span>
+                    <div className="max-w-[420px] flex flex-col">
+                      <div className="bg-white max-w-[420px] text-greyText2 p-4 rounded-r-3xl rounded-ss-3xl">
+                        <SyncLoader
+                          color={isDark ? "#1875F0" : "#000000"}
+                          size={10}
+                          speedMultiplier={0.7}
+                        />
+                      </div>
                     </div>
                   </div>
                 )}
-              </div>
-            </section>
+                <div>
+                  {isRefreshing && (
+                    <div className="p-10 flex justify-center items-center">
+                      <div className="bg-[#DCE4E9] px-8 py-1 rounded-3xl  flex flex-row items-center">
+                        <span>Refreshing...</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </section>
+            </div>
           </div>
         </>
       )}

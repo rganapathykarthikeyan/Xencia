@@ -3,33 +3,30 @@ import { assets } from "../assets";
 import BotChat from "./BotChat";
 import UserChat from "./UserChat";
 import { Button } from "./ui/button";
-import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 type ChatSectionProps = {
-  chat: {
-    id: string;
-    type: string;
-    data: string;
-    timeStamp: string;
-  }[];
   isLoading?: boolean;
   isDark?: boolean;
+  id: string;
 };
 
 const ChatSection = (props: ChatSectionProps) => {
-  const [chatList, setChatList] = useState(props.chat);
-  useEffect(() => {
-    setChatList(props.chat);
-  }, [props.chat]);
+  const chatList = useSelector((state: RootState) => state.chat);
+  const findChatIndexbyID = chatList.findIndex((data) => data.id === props.id);
+  const Chat = findChatIndexbyID !== -1 ? chatList[findChatIndexbyID] : null;
+
   return (
     <section className="h-full w-full md:px-52 font-sand text-sm flex flex-col gap-10 p-5">
-      {chatList.map((chat) => {
-        if (chat.type === "User") {
-          return <UserChat chat={chat} key={chat.id} />;
-        } else {
-          return <BotChat chat={chat} key={chat.id} />;
-        }
-      })}
+      {Chat !== null &&
+        Chat.chatHistory.map((chat) => {
+          if (chat.type === "User") {
+            return <UserChat chat={chat} key={chat.id} />;
+          } else {
+            return <BotChat chat={chat} key={chat.id} />;
+          }
+        })}
       {props.isLoading && (
         <div className="flex w-full flex-row justify-start gap-2">
           <div className="flex flex-col justify-end gap-1 items-center">

@@ -113,7 +113,7 @@ const ChatPage = () => {
       <div className="bg-[#d3e2ec8f] w-full flex-grow flex flex-col justify-between overflow-y-scroll">
         {Chat && (
           <ChatSection
-            chat={Chat.chatHistory}
+            id={id ? id : ""}
             isLoading={isLoading}
             isDark={isDark}
           />

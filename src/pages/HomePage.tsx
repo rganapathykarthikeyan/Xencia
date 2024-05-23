@@ -28,7 +28,7 @@ const HomePage = () => {
       },
       body: JSON.stringify({ message: text }),
     }).then((data) => {
-      console.log(data);
+      console.log(data.json());
     });
   };
 

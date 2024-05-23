@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { assets } from "../assets";
 import { cn } from "../lib/utils";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
@@ -134,17 +134,18 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
           <span className="text-xs font-bold">TODAY</span>
           {todayList.map((data) => {
             return (
-              <NavLink
-                to={"/c/" + data.id}
-                key={data.id}
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-xs md:text-base font-bold"
-                    : "text-xs md:text-base"
-                }
-              >
-                {data.name}
-              </NavLink>
+              // <NavLink
+              //   to={"/c/" + data.id}
+              //   key={data.id}
+              //   className={({ isActive }) =>
+              //     isActive
+              //       ? "text-xs md:text-base font-bold"
+              //       : "text-xs md:text-base"
+              //   }
+              // >
+              //   {data.name}
+              // </NavLink>
+              <div key={data.id}>{data.name}</div>
             );
           })}
         </div>
@@ -152,17 +153,18 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
           <span className="text-xs font-bold">PREVIOUSLY</span>
           {previousList.map((data) => {
             return (
-              <NavLink
-                to={"/c/" + data.id}
-                key={data.id}
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-xs md:text-base font-bold"
-                    : "text-xs md:text-base"
-                }
-              >
-                {data.name}
-              </NavLink>
+              // <NavLink
+              //   to={"/c/" + data.id}
+              //   key={data.id}
+              //   className={({ isActive }) =>
+              //     isActive
+              //       ? "text-xs md:text-base font-bold"
+              //       : "text-xs md:text-base"
+              //   }
+              // >
+              //   {data.name}
+              // </NavLink>
+              <div key={data.id}>{data.name}</div>
             );
           })}
         </div>

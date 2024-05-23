@@ -19,6 +19,7 @@ const ChatPage = () => {
   const findChatIndexbyID = chatList.findIndex((data) => data.id === id);
   const Chat = chatList[findChatIndexbyID];
   const [disabled, setDisabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [text, setText] = useState("");
 
@@ -30,6 +31,7 @@ const ChatPage = () => {
 
   const onSend = () => {
     setDisabled(true);
+    setIsLoading(true);
     let botText: string;
     if (id) {
       dispatch(addUserChat({ user: text, id: id }));
@@ -54,6 +56,7 @@ const ChatPage = () => {
           dispatch(addBotChat({ bot: botText, id: id }));
         }
         setDisabled(false);
+        setIsLoading(false);
       });
     setText("");
   };
@@ -102,7 +105,7 @@ const ChatPage = () => {
         </div>
       </section>
       <div className="bg-[#d3e2ec8f] w-full flex-grow flex flex-col justify-between overflow-y-scroll">
-        <ChatSection chat={Chat.chatHistory} />
+        <ChatSection chat={Chat.chatHistory} isLoading={isLoading} />
       </div>
       <section className="bg-white flex-row flex gap-1 p-3 w-full items-center justify-center">
         <div className="lg:min-w-[860px] min-w-full flex flex-row py-2 md:py-5 items-center gap-4">

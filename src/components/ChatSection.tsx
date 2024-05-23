@@ -1,3 +1,4 @@
+import { SyncLoader } from "react-spinners";
 import { assets } from "../assets";
 import BotChat from "./BotChat";
 import UserChat from "./UserChat";
@@ -10,6 +11,7 @@ type ChatSectionProps = {
     data: string;
     timeStamp: string;
   }[];
+  isLoading?: boolean;
 };
 
 const ChatSection = (props: ChatSectionProps) => {
@@ -22,6 +24,26 @@ const ChatSection = (props: ChatSectionProps) => {
           return <BotChat chat={chat} key={chat.id} />;
         }
       })}
+      {props.isLoading && (
+        <div className="flex w-full flex-row justify-start gap-2">
+          <div className="flex flex-col justify-end gap-1 items-center">
+            <div className="flex items-center justify-center h-12 w-12 bg-[#D9D9D9] rounded-full">
+              <img
+                src={assets.images.bot}
+                alt="profilePic"
+                className="h-auto w-8"
+                height={30}
+                width={30}
+              />
+            </div>
+          </div>
+          <div className="max-w-[420px] flex flex-col">
+            <div className="bg-white max-w-[420px] text-greyText2 p-4 rounded-r-3xl rounded-ss-3xl">
+              <SyncLoader color="#36d7b7" />
+            </div>
+          </div>
+        </div>
+      )}
       <div className="p-10 flex justify-center items-center">
         <div className="bg-[#DCE4E9] px-8 py-1 rounded-3xl  flex flex-row items-center">
           <span>Lorem ipsum dolor sit amet</span>

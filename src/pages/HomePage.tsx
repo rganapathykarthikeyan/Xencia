@@ -1,14 +1,11 @@
 import { assets } from "../assets";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
-import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useState } from "react";
 import SideBarNavigation from "../components/SideBarNavigation";
 import { cn } from "../lib/utils";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
-import UserChat from "../components/UserChat";
-import BotChat from "../components/BotChat";
-import { SyncLoader } from "react-spinners";
+import { useDispatch } from "react-redux";
+import { addNewChat } from "../store/chatSlice";
 
 type chatsModal = {
   id: string;
@@ -21,21 +18,15 @@ const HomePage = () => {
   const [showNav, setShowNav] = useState(false);
   const [text, setText] = useState("");
   const [disabled, setDisabled] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const [chatHistory, setChatHistory] = useState<chatsModal[]>([]);
-
-  const [isDark, setIsDark] = useState(false);
-  const theme = useSelector((state: RootState) => state.theme);
 
   const onChangeChat = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
 
-  useEffect(() => {
-    setIsDark(theme.theme === "dark");
-  }, [theme]);
+  const dispatch = useDispatch();
 
   // const dispatch = useDispatch();
 
@@ -76,7 +67,6 @@ const HomePage = () => {
       }),
     });
     setChatHistory(curHistory);
-    setIsLoading(true);
     setDisabled(true);
     setText("");
     fetch("https://nextgengamingbot.azurewebsites.net/send_message", {
@@ -95,23 +85,23 @@ const HomePage = () => {
       .then((data) => {
         // Handle the data returned by the server
         botText = data.ai_response;
-        // dispatch(addNewChat({ user: text, bot: botText }));
-        const curHistory = chatHistory;
-        curHistory.push({
-          id: Math.floor(Math.random() * 321517654).toString(),
-          type: "Bot",
-          data: botText,
-          timeStamp: new Date().toLocaleTimeString("en-GB", {
-            hour12: true,
-          }),
-        });
-        setChatHistory(curHistory);
-        setIsLoading(false);
-        setDisabled(false);
-      })
-      .catch(() => {
-        setIsLoading(false);
-        setDisabled(false);
+        dispatch(addNewChat({ user: text, bot: botText }));
+        //   const curHistory = chatHistory;
+        //   curHistory.push({
+        //     id: Math.floor(Math.random() * 321517654).toString(),
+        //     type: "Bot",
+        //     data: botText,
+        //     timeStamp: new Date().toLocaleTimeString("en-GB", {
+        //       hour12: true,
+        //     }),
+        //   });
+        //   setChatHistory(curHistory);
+        //   setIsLoading(false);
+        //   setDisabled(false);
+        // })
+        // .catch(() => {
+        //   setIsLoading(false);
+        //   setDisabled(false);
       });
     console.log(curHistory);
   };
@@ -132,29 +122,28 @@ const HomePage = () => {
       >
         <SideBarNavigation hideNav={hideShowNav} />
       </div>
-      {chatHistory.length === 0 ? (
-        <div className="bg-[#d3e2ec8f] w-full flex-grow flex flex-col items-center justify-center overflow-y-scroll backdrop-blur-[0.8px]">
-          <div className="font-sand text-2xl flex flex-row items-center gap-3 text-greyText1 absolute top-2 left-2 md:hidden">
-            <button
-              className="w-full flex justify-center"
-              onClick={() => {
-                setShowNav((pre) => !pre);
-              }}
-            >
-              <img
-                src={assets.icons.menuOutB}
-                alt="menu"
-                height={20}
-                width={20}
-              />
-            </button>
-            Xencia
-          </div>
-          <span className="font-sand font-bold text-lg md:text-3xl text-greyText1">
-            How may I help you today?
-          </span>
+      <div className="bg-[#d3e2ec8f] w-full flex-grow flex flex-col items-center justify-center overflow-y-scroll backdrop-blur-[0.8px]">
+        <div className="font-sand text-2xl flex flex-row items-center gap-3 text-greyText1 absolute top-2 left-2 md:hidden">
+          <button
+            className="w-full flex justify-center"
+            onClick={() => {
+              setShowNav((pre) => !pre);
+            }}
+          >
+            <img
+              src={assets.icons.menuOutB}
+              alt="menu"
+              height={20}
+              width={20}
+            />
+          </button>
+          Xencia
         </div>
-      ) : (
+        <span className="font-sand font-bold text-lg md:text-3xl text-greyText1">
+          How may I help you today?
+        </span>
+      </div>
+      {/* ) : (
         <>
           <section className="bg-white flex-row flex gap-5 p-3 ">
             <button
@@ -234,7 +223,7 @@ const HomePage = () => {
             </div>
           </div>
         </>
-      )}
+      )} */}
       <section className="bg-white flex-row flex gap-1 p-1 md:p-3 w-full items-center justify-center">
         <div className="lg:min-w-[860px] min-w-full flex flex-row items-center gap-4">
           <div className="flex flex-row">

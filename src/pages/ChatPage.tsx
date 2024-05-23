@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
 import { assets } from "../assets";
 import ChatSection from "../components/ChatSection";
 import { Button } from "../components/ui/button";
@@ -21,12 +21,39 @@ const ChatPage = () => {
   const [disabled, setDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   const [text, setText] = useState("");
 
   const dispatch = useDispatch();
 
   const onChangeChat = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
+  };
+
+  const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && text !== "") {
+      onSend();
+    }
+  };
+
+  const onRefresh = () => {
+    setIsRefreshing(true);
+    fetch("https://nextgengamingbot.azurewebsites.net/refreshed", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then(() => {
+        setIsRefreshing(false);
+      });
   };
 
   const onSend = async () => {
@@ -119,8 +146,8 @@ const ChatPage = () => {
           />
         )}
       </div>
-      <section className="bg-white flex-row flex gap-1 p-3 w-full items-center justify-center">
-        <div className="lg:min-w-[860px] min-w-full flex flex-row py-2 md:py-5 items-center gap-4">
+      <section className="bg-white flex-row flex gap-1 p-1 md:p-3 w-full items-center justify-center">
+        <div className="lg:min-w-[860px] min-w-full flex flex-row items-center gap-4">
           <div className="flex flex-row">
             <div>
               <img
@@ -140,14 +167,25 @@ const ChatPage = () => {
               value={text}
               onChange={onChangeChat}
               disabled={disabled}
+              onKeyDown={handleKeyPress}
             />
+          </div>
+          <div>
+            <Button
+              variant={"ghost"}
+              className="py-1 rounded-full"
+              onClick={onRefresh}
+              disabled={isRefreshing}
+            >
+              <img src={assets.icons.refresh} height={24} width={24} />
+            </Button>
           </div>
           <div>
             <Button
               variant={"blue"}
               className="py-3 px-4 md:py-6 md:px-7 rounded-full"
               onClick={onSend}
-              disabled={disabled}
+              disabled={disabled || text === ""}
             >
               SEND
             </Button>

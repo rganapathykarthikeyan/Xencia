@@ -17,49 +17,52 @@ const ChatPage = () => {
   const { id } = useParams();
   const chatList = useSelector((state: RootState) => state.chat);
   const findChatIndexbyID = chatList.findIndex((data) => data.id === id);
-  const Chat = chatList[findChatIndexbyID];
+  const Chat = findChatIndexbyID !== -1 ? chatList[findChatIndexbyID] : null;
   const [disabled, setDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log(chatList, findChatIndexbyID, Chat, id);
-
   const [text, setText] = useState("");
+
+  const dispatch = useDispatch();
 
   const onChangeChat = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
 
-  const dispatch = useDispatch();
+  const onSend = async () => {
+    if (!id) return;
 
-  const onSend = () => {
     setDisabled(true);
     setIsLoading(true);
-    let botText: string;
-    if (id) {
-      dispatch(addUserChat({ user: text, id: id }));
+
+    dispatch(addUserChat({ user: text, id }));
+
+    try {
+      const response = await fetch(
+        "https://gameskraftweb.azurewebsites.net/send_message",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message: text }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      const botText = data.ai_response;
+      dispatch(addBotChat({ bot: botText, id }));
+    } catch (error) {
+      console.error("Failed to send message:", error);
+    } finally {
+      setDisabled(false);
+      setIsLoading(false);
     }
-    fetch("https://gameskraftweb.azurewebsites.net/send_message", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ message: text }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // Handle the data returned by the server
-        botText = data.ai_response;
-        if (id) {
-          dispatch(addBotChat({ bot: botText, id: id }));
-        }
-        setDisabled(false);
-        setIsLoading(false);
-      });
+
     setText("");
   };
 
@@ -70,14 +73,15 @@ const ChatPage = () => {
   const hideShowNav = () => {
     setShowNav(false);
   };
+
   return (
     <div className="w-full h-full flex flex-col bg-backgroundImg bg-opacity-50">
       <div
         className={cn(
           "fixed top-0 h-svh md:h-screen bg-white duration-300 z-10",
           {
-            "left-0": showNav === true,
-            " left-[-100%]": showNav === false,
+            "left-0": showNav,
+            "left-[-100%]": !showNav,
           }
         )}
       >
@@ -87,14 +91,14 @@ const ChatPage = () => {
         <button
           className="flex md:hidden h-full items-center"
           onClick={() => {
-            setShowNav((pre) => !pre);
+            setShowNav((prev) => !prev);
           }}
         >
           <img src={assets.icons.menuOutB} alt="menu" height={20} width={20} />
         </button>
         <div className="flex flex-col">
           <span
-            className={cn(" text-xl font-bold", {
+            className={cn("text-xl font-bold", {
               "text-titleBlue": !isDark,
               "text-black": isDark,
             })}
@@ -107,11 +111,13 @@ const ChatPage = () => {
         </div>
       </section>
       <div className="bg-[#d3e2ec8f] w-full flex-grow flex flex-col justify-between overflow-y-scroll">
-        <ChatSection
-          chat={Chat.chatHistory}
-          isLoading={isLoading}
-          isDark={isDark}
-        />
+        {Chat && (
+          <ChatSection
+            chat={Chat.chatHistory}
+            isLoading={isLoading}
+            isDark={isDark}
+          />
+        )}
       </div>
       <section className="bg-white flex-row flex gap-1 p-3 w-full items-center justify-center">
         <div className="lg:min-w-[860px] min-w-full flex flex-row py-2 md:py-5 items-center gap-4">
@@ -141,6 +147,7 @@ const ChatPage = () => {
               variant={"blue"}
               className="py-3 px-4 md:py-6 md:px-7 rounded-full"
               onClick={onSend}
+              disabled={disabled}
             >
               SEND
             </Button>

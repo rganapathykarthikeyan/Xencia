@@ -25,7 +25,7 @@ const BotChat = (props: BotChatProps) => {
       </div>
       <div className="max-w-[420px] flex flex-col">
         <div
-          className="bg-white max-w-[420px] text-greyText2 p-4 rounded-r-3xl rounded-ss-3xl"
+          className="bg-white max-w-[420px] text-black p-4 rounded-r-3xl rounded-ss-3xl"
           onClick={() => {
             setShowOptions((pre) => !pre);
           }}

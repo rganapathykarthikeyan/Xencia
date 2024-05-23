@@ -27,6 +27,8 @@ const ChatPage = () => {
 
   const dispatch = useDispatch();
 
+  console.log("From ChatPage : ", Chat);
+
   const onChangeChat = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
@@ -138,13 +140,16 @@ const ChatPage = () => {
         </div>
       </section>
       <div className="bg-[#d3e2ec8f] w-full flex-grow flex flex-col justify-between overflow-y-scroll">
-        {Chat && (
-          <ChatSection
-            id={id ? id : ""}
-            isLoading={isLoading}
-            isDark={isDark}
-          />
-        )}
+        <div className="my-1">
+          {Chat && (
+            <ChatSection
+              id={id ? id : ""}
+              isLoading={isLoading}
+              isDark={isDark}
+              isRefreshing={isRefreshing}
+            />
+          )}
+        </div>
       </div>
       <section className="bg-white flex-row flex gap-1 p-1 md:p-3 w-full items-center justify-center">
         <div className="lg:min-w-[860px] min-w-full flex flex-row items-center gap-4">

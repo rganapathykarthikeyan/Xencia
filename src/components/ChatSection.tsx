@@ -3,7 +3,7 @@ import { assets } from "../assets";
 import BotChat from "./BotChat";
 import UserChat from "./UserChat";
 import { Button } from "./ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type ChatSectionProps = {
   chat: {
@@ -17,7 +17,10 @@ type ChatSectionProps = {
 };
 
 const ChatSection = (props: ChatSectionProps) => {
-  const [chatList] = useState(props.chat);
+  const [chatList, setChatList] = useState(props.chat);
+  useEffect(() => {
+    setChatList(props.chat);
+  }, [props.chat]);
   return (
     <section className="h-full w-full md:px-52 font-sand text-sm flex flex-col gap-10 p-5">
       {chatList.map((chat) => {

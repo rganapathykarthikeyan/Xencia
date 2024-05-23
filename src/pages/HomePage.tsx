@@ -153,7 +153,7 @@ const HomePage = () => {
               </a>
             </div>
           </section>
-          <div className="bg-[#d3e2ec8f] w-full flex-grow flex flex-col justify-between overflow-y-scroll mb-10">
+          <div className="bg-[#d3e2ec8f] w-full flex-grow flex flex-col justify-between overflow-y-scroll pb-10">
             <section className="h-full w-full md:px-52 font-sand text-sm flex flex-col gap-10 p-5">
               {chatHistory.map((chat) => {
                 if (chat.type === "User") {
@@ -218,6 +218,7 @@ const HomePage = () => {
               variant={"blue"}
               className="py-3 px-4 md:py-6 md:px-7 rounded-full"
               onClick={onSend}
+              disabled={disabled || text === ""}
             >
               SEND
             </Button>

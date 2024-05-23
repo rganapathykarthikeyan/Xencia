@@ -16,6 +16,7 @@ type ChatSectionProps = {
 };
 
 const ChatSection = (props: ChatSectionProps) => {
+  console.log("Chat Page:", props.chat);
   return (
     <section className="h-full w-full md:px-52 font-sand text-sm flex flex-col gap-10 p-5">
       {props.chat.map((chat) => {

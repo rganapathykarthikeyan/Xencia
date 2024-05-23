@@ -4,6 +4,7 @@ import BotChat from "./BotChat";
 import UserChat from "./UserChat";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import { useEffect, useRef } from "react";
 
 type ChatSectionProps = {
   isLoading?: boolean;
@@ -17,7 +18,17 @@ const ChatSection = (props: ChatSectionProps) => {
   const findChatIndexbyID = chatList.findIndex((data) => data.id === props.id);
   const Chat = findChatIndexbyID !== -1 ? chatList[findChatIndexbyID] : null;
 
+  const chatEndRef = useRef<HTMLDivElement | null>(null);
+
+  const scrollToBottom = () => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   console.log("From Section :", Chat);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [props.isLoading]);
 
   return (
     <section className="h-full w-full md:px-52 font-sand text-sm flex flex-col gap-10 p-5">
@@ -30,7 +41,10 @@ const ChatSection = (props: ChatSectionProps) => {
           }
         })}
       {props.isLoading && (
-        <div className="flex w-full flex-row justify-start gap-2">
+        <div
+          className="flex w-full flex-row justify-start gap-2"
+          ref={chatEndRef}
+        >
           <div className="flex flex-col justify-end gap-1 items-center">
             <div className="flex items-center justify-center h-12 w-12 bg-[#D9D9D9] rounded-full">
               <img
@@ -43,10 +57,7 @@ const ChatSection = (props: ChatSectionProps) => {
             </div>
           </div>
           <div className="max-w-[420px] flex flex-col">
-            <div
-              className="bg-white max-w-[420px] text-greyText2 p-4 rounded-r-3xl rounded-ss-3xl"
-              autoFocus={props.isLoading}
-            >
+            <div className="bg-white max-w-[420px] text-greyText2 p-4 rounded-r-3xl rounded-ss-3xl">
               <SyncLoader
                 color={props.isDark ? "#1875F0" : "#000000"}
                 size={10}

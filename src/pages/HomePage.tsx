@@ -82,6 +82,9 @@ const HomePage = () => {
         setChatHistory(curHistory);
         setIsLoading(false);
         setDisabled(false);
+      })
+      .catch(() => {
+        setIsLoading(false);
       });
     console.log(curHistory);
   };

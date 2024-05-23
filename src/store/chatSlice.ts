@@ -22,7 +22,7 @@ const chatSlice = createSlice({
           .join("-"),
         chatHistory: [
           {
-            id: Math.floor(Math.random()).toString(),
+            id: Math.floor(Math.random() * 3216321315).toString(),
             type: "User",
             data: action.payload.user,
             timeStamp: new Date().toLocaleTimeString("en-GB", {
@@ -30,7 +30,7 @@ const chatSlice = createSlice({
             }),
           },
           {
-            id: Math.floor(Math.random()).toString(),
+            id: Math.floor(Math.random() * 3216321315).toString(),
             type: "Bot",
             data: action.payload.bot,
             timeStamp: new Date().toLocaleTimeString("en-GB", {
@@ -46,7 +46,7 @@ const chatSlice = createSlice({
     ) => {
       const chatID = state.findIndex((chat) => chat.id === action.payload.id);
       state[chatID].chatHistory.push({
-        id: Math.floor(Math.random()).toString(),
+        id: Math.floor(Math.random() * 3216120315).toString(),
         type: "User",
         data: action.payload.user,
         timeStamp: new Date().toLocaleTimeString("en-GB", {
@@ -57,7 +57,7 @@ const chatSlice = createSlice({
     addBotChat: (state, action: PayloadAction<{ bot: string; id: string }>) => {
       const chatID = state.findIndex((chat) => chat.id === action.payload.id);
       state[chatID].chatHistory.push({
-        id: Math.floor(Math.random()).toString(),
+        id: Math.floor(Math.random() * 32112020315).toString(),
         type: "Bot",
         data: action.payload.bot,
         timeStamp: new Date().toLocaleTimeString("en-GB", {

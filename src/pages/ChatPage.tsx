@@ -8,7 +8,7 @@ import { cn } from "../lib/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { useParams } from "react-router-dom";
-import { addChat } from "../store/chatSlice";
+import { addBotChat, addUserChat } from "../store/chatSlice";
 
 const ChatPage = () => {
   const [showNav, setShowNav] = useState(false);
@@ -18,6 +18,7 @@ const ChatPage = () => {
   const chatList = useSelector((state: RootState) => state.chat);
   const findChatIndexbyID = chatList.findIndex((data) => data.id === id);
   const Chat = chatList[findChatIndexbyID];
+  const [disabled, setDisabled] = useState(false);
 
   const [text, setText] = useState("");
 
@@ -28,8 +29,11 @@ const ChatPage = () => {
   const dispatch = useDispatch();
 
   const onSend = () => {
+    setDisabled(true);
     let botText: string;
-    setText("");
+    if (id) {
+      dispatch(addUserChat({ user: text, id: id }));
+    }
     fetch("https://gameskraftweb.azurewebsites.net/send_message", {
       method: "POST",
       headers: {
@@ -47,9 +51,11 @@ const ChatPage = () => {
         // Handle the data returned by the server
         botText = data.ai_response;
         if (id) {
-          dispatch(addChat({ user: text, bot: botText, id: id }));
+          dispatch(addBotChat({ bot: botText, id: id }));
         }
+        setDisabled(false);
       });
+    setText("");
   };
 
   useEffect(() => {
@@ -118,6 +124,7 @@ const ChatPage = () => {
               className="focus:border-none focus:outline-none"
               value={text}
               onChange={onChangeChat}
+              disabled={disabled}
             />
           </div>
           <div>

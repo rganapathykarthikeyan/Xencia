@@ -9,10 +9,10 @@ const chatSlice = createSlice({
   reducers: {
     addNewChat: (
       state,
-      action: PayloadAction<{ user: string; bot: string }>
+      action: PayloadAction<{ id: string; user: string; bot: string }>
     ) => {
       state.push({
-        id: Math.floor(Math.random() * 3215123211).toString(),
+        id: action.payload.id,
         name: action.payload.user,
         timeStamp: new Date()
           .toISOString()

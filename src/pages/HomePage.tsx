@@ -6,6 +6,7 @@ import SideBarNavigation from "../components/SideBarNavigation";
 import { cn } from "../lib/utils";
 import { useDispatch } from "react-redux";
 import { addNewChat } from "../store/chatSlice";
+import { useNavigate } from "react-router-dom";
 
 type chatsModal = {
   id: string;
@@ -25,6 +26,8 @@ const HomePage = () => {
   const onChangeChat = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
+
+  const route = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -57,6 +60,7 @@ const HomePage = () => {
 
   const onSend = () => {
     let botText: string;
+    const id = Math.floor(Math.random() * 3216549876541).toString();
     const curHistory = chatHistory;
     curHistory.push({
       id: Math.floor(Math.random() * 3216549876541).toString(),
@@ -85,7 +89,8 @@ const HomePage = () => {
       .then((data) => {
         // Handle the data returned by the server
         botText = data.ai_response;
-        dispatch(addNewChat({ user: text, bot: botText }));
+        dispatch(addNewChat({ id: id, user: text, bot: botText }));
+        route("/c/" + id);
         //   const curHistory = chatHistory;
         //   curHistory.push({
         //     id: Math.floor(Math.random() * 321517654).toString(),

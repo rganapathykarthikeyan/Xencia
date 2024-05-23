@@ -7,11 +7,16 @@ import SideBarNavigation from "../components/SideBarNavigation";
 import { cn } from "../lib/utils";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import { useParams } from "react-router-dom";
 
 const ChatPage = () => {
   const [showNav, setShowNav] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const theme = useSelector((state: RootState) => state.theme);
+  const { id } = useParams();
+  const chatList = useSelector((state: RootState) => state.chat);
+  const findChatIndexbyID = chatList.findIndex((data) => data.id === id);
+  const Chat = chatList[findChatIndexbyID];
 
   useEffect(() => {
     setIsDark(theme.theme === "dark");
@@ -57,7 +62,7 @@ const ChatPage = () => {
         </div>
       </section>
       <div className="bg-[#d3e2ec8f] w-full flex-grow flex flex-col justify-between overflow-y-scroll">
-        <ChatSection />
+        <ChatSection chat={Chat.chatHistory} />
       </div>
       <section className="bg-white flex-row flex gap-1 p-3 w-full items-center justify-center">
         <div className="lg:min-w-[860px] min-w-full flex flex-row py-2 md:py-5 items-center gap-4">

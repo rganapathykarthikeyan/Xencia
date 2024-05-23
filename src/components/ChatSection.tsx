@@ -1,13 +1,21 @@
 import { assets } from "../assets";
-import { ChatHistoryDemoData } from "../lib/constants";
 import BotChat from "./BotChat";
 import UserChat from "./UserChat";
 import { Button } from "./ui/button";
 
-const ChatSection = () => {
+type ChatSectionProps = {
+  chat: {
+    id: string;
+    type: string;
+    data: string;
+    timeStamp: string;
+  }[];
+};
+
+const ChatSection = (props: ChatSectionProps) => {
   return (
     <section className="h-full w-full md:px-52 font-sand text-sm flex flex-col gap-10 p-5">
-      {ChatHistoryDemoData.map((chat) => {
+      {props.chat.map((chat) => {
         if (chat.type === "User") {
           return <UserChat chat={chat} key={chat.id} />;
         } else {

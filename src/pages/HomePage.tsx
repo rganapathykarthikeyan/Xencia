@@ -1,12 +1,36 @@
 import { assets } from "../assets";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import SideBarNavigation from "../components/SideBarNavigation";
 import { cn } from "../lib/utils";
+import { useDispatch } from "react-redux";
+import { addChat } from "../store/chatSlice";
 
 const HomePage = () => {
   const [showNav, setShowNav] = useState(false);
+  const [text, setText] = useState("");
+  // const chatList = useSelector((state: RootState) => state.chat);
+
+  const onChangeChat = (e: ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
+  };
+
+  const dispatch = useDispatch();
+
+  const onSend = () => {
+    setText("");
+    dispatch(addChat(text));
+    fetch("https://gameskraftweb.azurewebsites.net/send_message", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message: text }),
+    }).then((data) => {
+      console.log(data);
+    });
+  };
 
   const hideShowNav = () => {
     setShowNav(false);
@@ -63,12 +87,15 @@ const HomePage = () => {
               type="text"
               placeholder="Type your text here"
               className="focus:border-none focus:outline-none"
+              value={text}
+              onChange={onChangeChat}
             />
           </div>
           <div>
             <Button
               variant={"blue"}
               className="py-3 px-4 md:py-6 md:px-7 rounded-full"
+              onClick={onSend}
             >
               SEND
             </Button>

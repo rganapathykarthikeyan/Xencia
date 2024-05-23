@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { assets } from "../assets";
 import { cn } from "../lib/utils";
-import { ChatListTitleHistory } from "../lib/constants";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
@@ -15,18 +14,28 @@ type SideBarNavigationProps = {
 
 const SideBarNavigation = (props: SideBarNavigationProps) => {
   const [collapse, setCollapse] = useState(false);
-  const [list] = useState(ChatListTitleHistory);
+  const chatList = useSelector((state: RootState) => state.chat);
+  const today = new Date()
+    .toISOString()
+    .slice(0, 10)
+    .split("-")
+    .reverse()
+    .join("-");
+  const [list, setList] = useState(chatList);
   const [isDark, setIsDark] = useState(false);
   const theme = useSelector((state: RootState) => state.theme);
   const dispatch = useDispatch();
-  const todayList = list.filter((data) => data.timeStamp === "Today");
-  const lastWeekList = list.filter((data) => data.timeStamp === "Previously");
-  const lastMonth = list.filter((data) => data.timeStamp === "Help");
+  const todayList = list.filter((data) => data.timeStamp === today);
+  const previousList = list.filter((data) => data.timeStamp !== today);
   const route = useNavigate();
 
   useEffect(() => {
     setIsDark(theme.theme === "dark");
   }, [theme]);
+
+  useEffect(() => {
+    setList(chatList);
+  }, [chatList]);
 
   return (
     <div
@@ -141,7 +150,7 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
         </div>
         <div className="flex flex-col gap-3">
           <span className="text-xs font-bold">PREVIOUSLY</span>
-          {lastWeekList.map((data) => {
+          {previousList.map((data) => {
             return (
               <NavLink
                 to={"/c/" + data.id}
@@ -157,7 +166,7 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
             );
           })}
         </div>
-        <div className="flex flex-col gap-3">
+        {/* <div className="flex flex-col gap-3">
           <span className="text-xs font-bold">HELP</span>
           {lastMonth.map((data) => {
             return (
@@ -174,7 +183,7 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
               </NavLink>
             );
           })}
-        </div>
+        </div> */}
       </section>
 
       {/* Footer */}

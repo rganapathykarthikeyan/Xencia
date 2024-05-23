@@ -174,7 +174,7 @@ const HomePage = () => {
                   <div className="flex flex-col justify-end gap-1 items-center">
                     <div className="flex items-center justify-center h-12 w-12 bg-[#D9D9D9] rounded-full">
                       <img
-                        src={assets.images.bot}
+                        src={assets.images.XenciaS}
                         alt="profilePic"
                         className="h-auto w-8"
                         height={30}

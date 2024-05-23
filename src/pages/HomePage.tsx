@@ -27,9 +27,17 @@ const HomePage = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ message: text }),
-    }).then((data) => {
-      console.log(data.json());
-    });
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Handle the data returned by the server
+        console.log(data.ai_response);
+      });
   };
 
   const hideShowNav = () => {

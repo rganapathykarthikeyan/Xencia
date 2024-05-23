@@ -25,13 +25,13 @@ const chatSlice = createSlice({
             id: Math.floor(Math.random()).toString(),
             type: "User",
             data: action.payload.user,
-            timeStamp: new Date().toLocaleString("en-GB").replace(",", ""),
+            timeStamp: new Date().toLocaleTimeString("en-GB"),
           },
           {
             id: Math.floor(Math.random()).toString(),
             type: "Bot",
             data: action.payload.bot,
-            timeStamp: new Date().toLocaleString("en-GB").replace(",", ""),
+            timeStamp: new Date().toLocaleTimeString("en-GB"),
           },
         ],
       });
@@ -45,7 +45,7 @@ const chatSlice = createSlice({
         id: Math.floor(Math.random()).toString(),
         type: "User",
         data: action.payload.user,
-        timeStamp: new Date().toLocaleString("en-GB").replace(",", ""),
+        timeStamp: new Date().toLocaleTimeString("en-GB"),
       });
     },
     addBotChat: (state, action: PayloadAction<{ bot: string; id: string }>) => {
@@ -54,7 +54,7 @@ const chatSlice = createSlice({
         id: Math.floor(Math.random()).toString(),
         type: "Bot",
         data: action.payload.bot,
-        timeStamp: new Date().toLocaleString("en-GB").replace(",", ""),
+        timeStamp: new Date().toLocaleTimeString("en-GB"),
       });
     },
   },

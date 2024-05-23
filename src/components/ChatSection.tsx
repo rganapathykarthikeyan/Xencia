@@ -59,8 +59,8 @@ const ChatSection = (props: ChatSectionProps) => {
           <div className="max-w-[420px] flex flex-col">
             <div className="bg-white max-w-[420px] text-greyText2 p-4 rounded-r-3xl rounded-ss-3xl">
               <SyncLoader
-                color={props.isDark ? "#1875F0" : "#000000"}
-                size={10}
+                color={props.isDark ? "#000000" : "#1875F0"}
+                size={8}
                 speedMultiplier={0.7}
               />
             </div>

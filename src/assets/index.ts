@@ -16,5 +16,6 @@ export const assets = {
     dislike: "/icons/dislike.svg",
     copy: "/icons/copy.svg",
     volume: "/icons/volume.svg",
+    refresh: "/icons/refresh.svg",
   },
 };

@@ -1,7 +1,7 @@
 import { assets } from "../assets";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
 import SideBarNavigation from "../components/SideBarNavigation";
 import { cn } from "../lib/utils";
 import { useSelector } from "react-redux";
@@ -22,6 +22,7 @@ const HomePage = () => {
   const [text, setText] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const [chatHistory, setChatHistory] = useState<chatsModal[]>([]);
 
@@ -38,6 +39,31 @@ const HomePage = () => {
 
   // const dispatch = useDispatch();
 
+  const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && text !== "") {
+      onSend();
+    }
+  };
+
+  const onRefresh = () => {
+    setIsRefreshing(true);
+    fetch("https://nextgengamingbot.azurewebsites.net/refreshed", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then(() => {
+        setIsRefreshing(false);
+      });
+  };
+
   const onSend = () => {
     let botText: string;
     const curHistory = chatHistory;
@@ -53,7 +79,7 @@ const HomePage = () => {
     setIsLoading(true);
     setDisabled(true);
     setText("");
-    fetch("https://gameskraftweb.azurewebsites.net/send_message", {
+    fetch("https://nextgengamingbot.azurewebsites.net/send_message", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -198,8 +224,17 @@ const HomePage = () => {
           </div>
         </>
       )}
+      <div>
+        {isRefreshing && (
+          <div className="p-10 flex justify-center items-center">
+            <div className="bg-[#DCE4E9] px-8 py-1 rounded-3xl  flex flex-row items-center">
+              <span>Refreshing</span>
+            </div>
+          </div>
+        )}
+      </div>
       <section className="bg-white flex-row flex gap-1 p-1 md:p-3 w-full items-center justify-center">
-        <div className="lg:min-w-[860px] min-w-full flex flex-row py-2 md:py-5 items-center gap-4">
+        <div className="lg:min-w-[860px] min-w-full flex flex-row items-center gap-4">
           <div className="flex flex-row">
             <div>
               <img
@@ -219,7 +254,18 @@ const HomePage = () => {
               value={text}
               onChange={onChangeChat}
               disabled={disabled}
+              onKeyDown={handleKeyPress}
             />
+          </div>
+          <div>
+            <Button
+              variant={"ghost"}
+              className="py-1 rounded-full"
+              onClick={onRefresh}
+              disabled={isRefreshing}
+            >
+              <img src={assets.icons.refresh} height={24} width={24} />
+            </Button>
           </div>
           <div>
             <Button

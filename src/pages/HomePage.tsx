@@ -85,6 +85,7 @@ const HomePage = () => {
       })
       .catch(() => {
         setIsLoading(false);
+        setDisabled(false);
       });
     console.log(curHistory);
   };

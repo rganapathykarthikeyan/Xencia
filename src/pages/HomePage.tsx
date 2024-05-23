@@ -45,7 +45,9 @@ const HomePage = () => {
       id: Math.floor(Math.random() * 3216549876541).toString(),
       type: "User",
       data: text,
-      timeStamp: new Date().toLocaleTimeString("en-GB"),
+      timeStamp: new Date().toLocaleTimeString("en-GB", {
+        hour12: true,
+      }),
     });
     setChatHistory(curHistory);
     setIsLoading(true);
@@ -73,7 +75,9 @@ const HomePage = () => {
           id: Math.floor(Math.random() * 321517654).toString(),
           type: "Bot",
           data: botText,
-          timeStamp: new Date().toLocaleTimeString("en-GB"),
+          timeStamp: new Date().toLocaleTimeString("en-GB", {
+            hour12: true,
+          }),
         });
         setChatHistory(curHistory);
         setIsLoading(false);
@@ -122,7 +126,7 @@ const HomePage = () => {
         </div>
       ) : (
         <>
-          <section className="bg-white flex-row flex gap-5 p-3 px-10 ">
+          <section className="bg-white flex-row flex gap-5 p-3 ">
             <button
               className="flex md:hidden h-full items-center"
               onClick={() => {
@@ -154,7 +158,7 @@ const HomePage = () => {
             </div>
           </section>
           <div className="bg-[#d3e2ec8f] w-full flex-grow flex flex-col justify-between overflow-y-scroll pb-10">
-            <section className="h-full w-full md:px-52 font-sand text-sm flex flex-col gap-10 p-5">
+            <section className="h-full w-full md:px-52 font-sand text-sm flex flex-col gap-10 p-5 mb-5">
               {chatHistory.map((chat) => {
                 if (chat.type === "User") {
                   return <UserChat chat={chat} key={chat.id} />;

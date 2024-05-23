@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { assets } from "../assets";
 import ChatSection from "../components/ChatSection";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import SideBarNavigation from "../components/SideBarNavigation";
 import { cn } from "../lib/utils";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { useParams } from "react-router-dom";
+import { addChat } from "../store/chatSlice";
 
 const ChatPage = () => {
   const [showNav, setShowNav] = useState(false);
@@ -17,6 +18,39 @@ const ChatPage = () => {
   const chatList = useSelector((state: RootState) => state.chat);
   const findChatIndexbyID = chatList.findIndex((data) => data.id === id);
   const Chat = chatList[findChatIndexbyID];
+
+  const [text, setText] = useState("");
+
+  const onChangeChat = (e: ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
+  };
+
+  const dispatch = useDispatch();
+
+  const onSend = () => {
+    let botText: string;
+    setText("");
+    fetch("https://gameskraftweb.azurewebsites.net/send_message", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message: text }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Handle the data returned by the server
+        botText = data.ai_response;
+        if (id) {
+          dispatch(addChat({ user: text, bot: botText, id: id }));
+        }
+      });
+  };
 
   useEffect(() => {
     setIsDark(theme.theme === "dark");
@@ -82,12 +116,15 @@ const ChatPage = () => {
               type="text"
               placeholder="Type your text here"
               className="focus:border-none focus:outline-none"
+              value={text}
+              onChange={onChangeChat}
             />
           </div>
           <div>
             <Button
               variant={"blue"}
               className="py-3 px-4 md:py-6 md:px-7 rounded-full"
+              onClick={onSend}
             >
               SEND
             </Button>

@@ -5,12 +5,11 @@ import { ChangeEvent, useState } from "react";
 import SideBarNavigation from "../components/SideBarNavigation";
 import { cn } from "../lib/utils";
 import { useDispatch } from "react-redux";
-import { addChat } from "../store/chatSlice";
+import { addNewChat } from "../store/chatSlice";
 
 const HomePage = () => {
   const [showNav, setShowNav] = useState(false);
   const [text, setText] = useState("");
-  // const chatList = useSelector((state: RootState) => state.chat);
 
   const onChangeChat = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
@@ -19,8 +18,8 @@ const HomePage = () => {
   const dispatch = useDispatch();
 
   const onSend = () => {
+    let botText: string;
     setText("");
-    dispatch(addChat(text));
     fetch("https://gameskraftweb.azurewebsites.net/send_message", {
       method: "POST",
       headers: {
@@ -36,7 +35,8 @@ const HomePage = () => {
       })
       .then((data) => {
         // Handle the data returned by the server
-        console.log(data.ai_response);
+        botText = data.ai_response;
+        dispatch(addNewChat({ user: text, bot: botText }));
       });
   };
 

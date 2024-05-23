@@ -7,10 +7,13 @@ const chatSlice = createSlice({
   name: "chat",
   initialState,
   reducers: {
-    addChat: (state, action: PayloadAction<string>) => {
+    addNewChat: (
+      state,
+      action: PayloadAction<{ user: string; bot: string }>
+    ) => {
       state.push({
         id: Math.floor(Math.random() * 3215123211).toString(),
-        name: action.payload,
+        name: action.payload.user,
         timeStamp: new Date()
           .toISOString()
           .slice(0, 10)
@@ -21,15 +24,41 @@ const chatSlice = createSlice({
           {
             id: Math.floor(Math.random()).toString(),
             type: "User",
-            data: action.payload,
+            data: action.payload.user,
+            timeStamp: new Date().toLocaleString("en-GB").replace(",", ""),
+          },
+          {
+            id: Math.floor(Math.random()).toString(),
+            type: "Bot",
+            data: action.payload.bot,
             timeStamp: new Date().toLocaleString("en-GB").replace(",", ""),
           },
         ],
       });
     },
+    addChat: (
+      state,
+      action: PayloadAction<{ user: string; bot: string; id: string }>
+    ) => {
+      const chatID = state.findIndex((chat) => chat.id === action.payload.id);
+      state[chatID].chatHistory.push(
+        {
+          id: Math.floor(Math.random()).toString(),
+          type: "User",
+          data: action.payload.user,
+          timeStamp: new Date().toLocaleString("en-GB").replace(",", ""),
+        },
+        {
+          id: Math.floor(Math.random()).toString(),
+          type: "Bot",
+          data: action.payload.bot,
+          timeStamp: new Date().toLocaleString("en-GB").replace(",", ""),
+        }
+      );
+    },
   },
 });
 
-export const { addChat } = chatSlice.actions;
+export const { addNewChat, addChat } = chatSlice.actions;
 
 export default chatSlice.reducer;

@@ -45,7 +45,7 @@ const ChatSection = (props: ChatSectionProps) => {
           <div className="max-w-[420px] flex flex-col">
             <div
               className="bg-white max-w-[420px] text-greyText2 p-4 rounded-r-3xl rounded-ss-3xl"
-              autoFocus
+              autoFocus={props.isLoading}
             >
               <SyncLoader
                 color={props.isDark ? "#1875F0" : "#000000"}

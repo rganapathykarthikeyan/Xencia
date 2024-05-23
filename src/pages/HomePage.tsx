@@ -220,19 +220,19 @@ const HomePage = () => {
                   </div>
                 </div>
               )}
+              <div>
+                {isRefreshing && (
+                  <div className="p-10 flex justify-center items-center">
+                    <div className="bg-[#DCE4E9] px-8 py-1 rounded-3xl  flex flex-row items-center">
+                      <span>Refreshing...</span>
+                    </div>
+                  </div>
+                )}
+              </div>
             </section>
           </div>
         </>
       )}
-      <div>
-        {isRefreshing && (
-          <div className="p-10 flex justify-center items-center">
-            <div className="bg-[#DCE4E9] px-8 py-1 rounded-3xl  flex flex-row items-center">
-              <span>Refreshing</span>
-            </div>
-          </div>
-        )}
-      </div>
       <section className="bg-white flex-row flex gap-1 p-1 md:p-3 w-full items-center justify-center">
         <div className="lg:min-w-[860px] min-w-full flex flex-row items-center gap-4">
           <div className="flex flex-row">

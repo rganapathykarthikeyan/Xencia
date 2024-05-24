@@ -36,7 +36,7 @@ const ChatSection = (props: ChatSectionProps) => {
         Chat.chatHistory.map((chat, index, array) => {
           if (chat.type === "User") {
             return (
-              <div>
+              <div ref={index === array.length - 1 ? chatEndRef : null}>
                 <UserChat chat={chat} key={chat.id} />
               </div>
             );

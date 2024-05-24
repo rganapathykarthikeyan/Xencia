@@ -68,7 +68,7 @@ const ChatPage = () => {
 
     try {
       const response = await fetch(
-        "https://gameskraftweb.azurewebsites.net/send_message",
+        "https://nextgengamingbot.azurewebsites.net/send_message",
         {
           method: "POST",
           headers: {

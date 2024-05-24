@@ -33,18 +33,23 @@ const ChatSection = (props: ChatSectionProps) => {
   return (
     <section className="h-full w-full md:px-52 font-sand text-sm flex flex-col gap-10 p-5">
       {Chat !== null &&
-        Chat.chatHistory.map((chat) => {
+        Chat.chatHistory.map((chat, index, array) => {
           if (chat.type === "User") {
-            return <UserChat chat={chat} key={chat.id} />;
+            return (
+              <div>
+                <UserChat chat={chat} key={chat.id} />
+              </div>
+            );
           } else {
-            return <BotChat chat={chat} key={chat.id} />;
+            return (
+              <div ref={index === array.length - 1 ? chatEndRef : null}>
+                <BotChat chat={chat} key={chat.id} />;
+              </div>
+            );
           }
         })}
       {props.isLoading && (
-        <div
-          className="flex w-full flex-row justify-start gap-2"
-          ref={chatEndRef}
-        >
+        <div className="flex w-full flex-row justify-start gap-2">
           <div className="flex flex-col justify-end gap-1 items-center">
             <div className="flex items-center justify-center h-12 w-12 bg-[#D9D9D9] rounded-full">
               <img

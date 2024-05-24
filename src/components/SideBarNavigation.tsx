@@ -69,7 +69,7 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
             }
           )}
           onClick={() => {
-            route("/");
+            route("/c/addcashagent");
           }}
         >
           {!collapse ? (

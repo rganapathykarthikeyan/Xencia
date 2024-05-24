@@ -3,12 +3,24 @@ import { ChatListTitleHistory } from "../lib/constants";
 
 const initialState = ChatListTitleHistory;
 
+type chatState = {
+  id: string;
+  name: string;
+  timeStamp: string;
+  chatHistory: {
+    id: string;
+    type: string;
+    data: string;
+    timeStamp: string;
+  }[];
+}[];
+
 const chatSlice = createSlice({
   name: "chat",
   initialState,
   reducers: {
     addNewChat: (
-      state,
+      state: chatState,
       action: PayloadAction<{ id: string; user: string; bot: string }>
     ) => {
       state.push({
@@ -41,7 +53,7 @@ const chatSlice = createSlice({
       });
     },
     addUserChat: (
-      state,
+      state: chatState,
       action: PayloadAction<{ user: string; id: string }>
     ) => {
       const chatID = state.findIndex((chat) => chat.id === action.payload.id);
@@ -54,7 +66,10 @@ const chatSlice = createSlice({
         }),
       });
     },
-    addBotChat: (state, action: PayloadAction<{ bot: string; id: string }>) => {
+    addBotChat: (
+      state: chatState,
+      action: PayloadAction<{ bot: string; id: string }>
+    ) => {
       const chatID = state.findIndex((chat) => chat.id === action.payload.id);
       state[chatID].chatHistory.push({
         id: Math.floor(Math.random() * 32112020315).toString(),
@@ -65,9 +80,14 @@ const chatSlice = createSlice({
         }),
       });
     },
+    removeChat: (state: chatState, action: PayloadAction<{ id: string }>) => {
+      const chatID = state.findIndex((chat) => chat.id === action.payload.id);
+      state[chatID].chatHistory = [];
+    },
   },
 });
 
-export const { addNewChat, addUserChat, addBotChat } = chatSlice.actions;
+export const { addNewChat, addUserChat, addBotChat, removeChat } =
+  chatSlice.actions;
 
 export default chatSlice.reducer;

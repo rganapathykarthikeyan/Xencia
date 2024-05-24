@@ -1,7 +1,7 @@
 import { assets } from "../assets";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
-import { ChangeEvent, KeyboardEvent, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
 import SideBarNavigation from "../components/SideBarNavigation";
 import { cn } from "../lib/utils";
 import { useDispatch } from "react-redux";
@@ -30,6 +30,10 @@ const HomePage = () => {
   const route = useNavigate();
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    route("/c/addcashagent");
+  }, []);
 
   // const dispatch = useDispatch();
 

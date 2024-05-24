@@ -8,7 +8,7 @@ import { cn } from "../lib/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { useParams } from "react-router-dom";
-import { addBotChat, addUserChat } from "../store/chatSlice";
+import { addBotChat, addUserChat, removeChat } from "../store/chatSlice";
 
 const ChatPage = () => {
   const [showNav, setShowNav] = useState(false);
@@ -40,6 +40,8 @@ const ChatPage = () => {
   };
 
   const onRefresh = () => {
+    if (!id) return;
+
     setIsRefreshing(true);
     fetch("https://nextgengamingbot.azurewebsites.net/refreshed", {
       method: "POST",
@@ -51,6 +53,7 @@ const ChatPage = () => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
+        dispatch(removeChat({ id }));
         return response.json();
       })
       .then(() => {

@@ -26,7 +26,10 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
   const theme = useSelector((state: RootState) => state.theme);
   const dispatch = useDispatch();
   const todayList = list.filter((data) => data.timeStamp === today);
-  const previousList = list.filter((data) => data.timeStamp !== today);
+  const previousList = list.filter(
+    (data) => data.timeStamp !== today && data.timeStamp !== "help"
+  );
+  const help = list.filter((data) => data.timeStamp === "help");
   const route = useNavigate();
 
   useEffect(() => {
@@ -166,9 +169,9 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
             );
           })}
         </div>
-        {/* <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3">
           <span className="text-xs font-bold">HELP</span>
-          {lastMonth.map((data) => {
+          {help.map((data) => {
             return (
               <NavLink
                 to={"/c/" + data.id}
@@ -183,12 +186,12 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
               </NavLink>
             );
           })}
-        </div> */}
+        </div>
       </section>
 
       {/* Footer */}
       <section>
-        <div
+        {/* <div
           className={cn("", {
             "border-[#FFFFFF66] bg-[#FFFFFF4D] mx-4 my-2 p-2 border rounded-xl flex flex-row gap-2":
               !collapse,
@@ -206,7 +209,7 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
           >
             Help
           </span>
-        </div>
+        </div> */}
         <div
           className={cn("flex", {
             "flex-row p-5": !collapse,

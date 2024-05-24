@@ -144,9 +144,9 @@ const HomePage = () => {
           </button>
           Xencia
         </div>
-        <span className="font-sand font-bold text-lg md:text-3xl text-greyText1">
+        {/* <span className="font-sand font-bold text-lg md:text-3xl text-greyText1">
           How may I help you today?
-        </span>
+        </span> */}
       </div>
       {/* ) : (
         <>

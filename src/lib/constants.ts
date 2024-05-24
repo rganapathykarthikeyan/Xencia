@@ -2,7 +2,12 @@ export const ChatListTitleHistory = [
   {
     id: "32167asdf",
     name: "Add cash agent",
-    timeStamp: "23-05-2024",
+    timeStamp: new Date()
+      .toISOString()
+      .slice(0, 10)
+      .split("-")
+      .reverse()
+      .join("-"),
     chatHistory: [
       {
         id: "1",
@@ -57,7 +62,12 @@ export const ChatListTitleHistory = [
   {
     id: "32167awv",
     name: "Conversations",
-    timeStamp: "23-05-2024",
+    timeStamp: new Date()
+      .toISOString()
+      .slice(0, 10)
+      .split("-")
+      .reverse()
+      .join("-"),
     chatHistory: [
       {
         id: "1",
@@ -112,7 +122,12 @@ export const ChatListTitleHistory = [
   {
     id: "32167ageew",
     name: "Registration",
-    timeStamp: "23-05-2024",
+    timeStamp: new Date()
+      .toISOString()
+      .slice(0, 10)
+      .split("-")
+      .reverse()
+      .join("-"),
     chatHistory: [
       {
         id: "1",

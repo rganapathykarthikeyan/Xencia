@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import themeSlice from "./themeSlice";
-import chatSlice from "./chatSlice";
+import themeSlice, { ThemeState } from "./themeSlice";
+import chatSlice, { chatState } from "./chatSlice";
 
 export const store = configureStore({
   reducer: {
@@ -9,5 +9,8 @@ export const store = configureStore({
   },
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = {
+  theme: ThemeState;
+  chat: chatState;
+};
 export type AppDispatch = typeof store.dispatch;

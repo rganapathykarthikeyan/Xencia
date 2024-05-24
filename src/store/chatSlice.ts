@@ -3,7 +3,7 @@ import { ChatListTitleHistory } from "../lib/constants";
 
 const initialState = ChatListTitleHistory;
 
-type chatState = {
+export type chatState = {
   id: string;
   name: string;
   timeStamp: string;

@@ -132,7 +132,7 @@ const ChatPage = () => {
               "text-black": isDark,
             })}
           >
-            Add cash agent
+            {Chat ? Chat.name : "title"}
           </span>
           <a href="mailto:support@xencia.com" className="text-greyText text-sm">
             support@xencia.com

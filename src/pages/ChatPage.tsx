@@ -8,7 +8,7 @@ import { cn } from "../lib/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { useParams } from "react-router-dom";
-import { addBotChat, addUserChat, removeChat } from "../store/chatSlice";
+import { addUserChat, removeChat } from "../store/chatSlice";
 
 const ChatPage = () => {
   const [showNav, setShowNav] = useState(false);
@@ -86,19 +86,20 @@ const ChatPage = () => {
       }
 
       if (response.ok && response.body !== null) {
-        const reader = response.body.getReader();
-        const { value, done } = await reader.read();
-
-        if (done) {
-          console.log("The stream was already closed!");
-        } else {
-          console.log(value);
+        const reader = response.body
+          .pipeThrough(new TextDecoderStream())
+          .getReader();
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          console.log("Received:", value);
         }
+        console.log("End");
       }
 
-      const data = await response.json();
-      const botText = data.ai_response;
-      dispatch(addBotChat({ bot: botText, id }));
+      // const data = await response.json();
+      // const botText = data.ai_response;
+      // dispatch(addBotChat({ bot: botText, id }));
     } catch (error) {
       console.error("Failed to send message:", error);
     } finally {

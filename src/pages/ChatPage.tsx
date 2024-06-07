@@ -8,7 +8,7 @@ import { cn } from "../lib/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { useParams } from "react-router-dom";
-import { addUserChat, removeChat } from "../store/chatSlice";
+import { addBotChat, addUserChat, removeChat } from "../store/chatSlice";
 
 const ChatPage = () => {
   const [showNav, setShowNav] = useState(false);
@@ -85,25 +85,9 @@ const ChatPage = () => {
         throw new Error("Network response was not ok");
       }
 
-      if (response.ok && response.body !== null) {
-        const reader = response.body
-          .pipeThrough(new TextDecoderStream())
-          .getReader();
-        while (true) {
-          const { value, done } = await reader.read();
-          if (done) {
-            console.log("End of stream");
-            break;
-          }
-          console.log("Received chunk:", value);
-        }
-      } else {
-        console.error("Response not OK or body is null");
-      }
-
-      // const data = await response.json();
-      // const botText = data.ai_response;
-      // dispatch(addBotChat({ bot: botText, id }));
+      const data = await response.json();
+      const botText = data.ai_response;
+      dispatch(addBotChat({ bot: botText, id }));
     } catch (error) {
       console.error("Failed to send message:", error);
     } finally {

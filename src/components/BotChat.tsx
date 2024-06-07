@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { assets } from "../assets";
 import { Button } from "./ui/button";
+import { Typewriter } from "react-simple-typewriter";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type BotChatProps = {
@@ -30,7 +31,7 @@ const BotChat = (props: BotChatProps) => {
             setShowOptions((pre) => !pre);
           }}
         >
-          {props.chat.data}
+          <Typewriter words={props.chat.data.split(" ")} />
         </div>
         {showOptions && (
           <div className="flex flex-row w-full justify-end">

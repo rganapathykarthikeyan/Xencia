@@ -80,7 +80,7 @@ const ChatSection = (props: ChatSectionProps) => {
                 speed={{ type: "keyStrokeDelayInMs", value: 150 }}
               />
               {showLoader && (
-                <Skeleton className="w-[100px] h-[20px] rounded-full" />
+                <Skeleton className="w-full h-[20px] rounded-full" />
               )}
             </div>
           </div>

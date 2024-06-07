@@ -85,6 +85,17 @@ const ChatPage = () => {
         throw new Error("Network response was not ok");
       }
 
+      if (response.ok && response.body !== null) {
+        const reader = response.body.getReader();
+        const { value, done } = await reader.read();
+
+        if (done) {
+          console.log("The stream was already closed!");
+        } else {
+          console.log(value);
+        }
+      }
+
       const data = await response.json();
       const botText = data.ai_response;
       dispatch(addBotChat({ bot: botText, id }));

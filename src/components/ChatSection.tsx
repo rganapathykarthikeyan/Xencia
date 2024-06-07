@@ -31,6 +31,9 @@ const ChatSection = (props: ChatSectionProps) => {
 
   useEffect(() => {
     scrollToBottom();
+    if (props.isLoading === false) {
+      setShowLoader(false);
+    }
   }, [props.isLoading]);
 
   return (
@@ -74,7 +77,7 @@ const ChatSection = (props: ChatSectionProps) => {
                   },
                 ]}
                 cursor={false}
-                speed={{ type: "keyStrokeDelayInMs", value: 350 }}
+                speed={{ type: "keyStrokeDelayInMs", value: 150 }}
               />
               {showLoader && (
                 <SyncLoader

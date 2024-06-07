@@ -91,10 +91,14 @@ const ChatPage = () => {
           .getReader();
         while (true) {
           const { value, done } = await reader.read();
-          if (done) break;
-          console.log("Received:", value);
+          if (done) {
+            console.log("End of stream");
+            break;
+          }
+          console.log("Received chunk:", value);
         }
-        console.log("End");
+      } else {
+        console.error("Response not OK or body is null");
       }
 
       // const data = await response.json();

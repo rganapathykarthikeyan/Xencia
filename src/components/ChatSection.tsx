@@ -1,10 +1,9 @@
-import { SyncLoader } from "react-spinners";
 import { assets } from "../assets";
 import BotChat from "./BotChat";
 import UserChat from "./UserChat";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { TypeAnimation } from "react-type-animation";
 
 type ChatSectionProps = {
@@ -25,15 +24,10 @@ const ChatSection = (props: ChatSectionProps) => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const [showLoader, setShowLoader] = useState(false);
-
   console.log("From Section :", Chat);
 
   useEffect(() => {
     scrollToBottom();
-    if (props.isLoading === false) {
-      setShowLoader(false);
-    }
   }, [props.isLoading]);
 
   return (
@@ -68,24 +62,13 @@ const ChatSection = (props: ChatSectionProps) => {
             </div>
           </div>
           <div className="max-w-[420px] flex flex-col">
-            <div className="bg-white max-w-[420px] text-greyText2 p-4 rounded-r-3xl rounded-ss-3xl">
+            <div className="bg-white max-w-[420px] text-greyText2 p-4 rounded-r-3xl rounded-ss-3xl flex flex-wrap">
               <TypeAnimation
-                sequence={[
-                  "The reply for your input is below",
-                  () => {
-                    setShowLoader(true);
-                  },
-                ]}
+                sequence={["The reply for your input is below"]}
                 cursor={false}
                 speed={{ type: "keyStrokeDelayInMs", value: 150 }}
               />
-              {showLoader && (
-                <SyncLoader
-                  color={"#2a2a2ad2"}
-                  size={8}
-                  speedMultiplier={0.7}
-                />
-              )}
+              <div className="animate-pulse rounded-md h-4 w-[250px]"></div>
             </div>
           </div>
         </div>

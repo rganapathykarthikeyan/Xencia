@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { assets } from "../assets";
 import { Button } from "./ui/button";
-import { Typewriter } from "react-simple-typewriter";
+import { TypeAnimation } from "react-type-animation";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type BotChatProps = {
@@ -31,7 +31,7 @@ const BotChat = (props: BotChatProps) => {
             setShowOptions((pre) => !pre);
           }}
         >
-          <Typewriter words={props.chat.data.split(" ")} />
+          <TypeAnimation sequence={props.chat.data} cursor={false} />
         </div>
         {showOptions && (
           <div className="flex flex-row w-full justify-end">

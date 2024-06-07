@@ -73,7 +73,7 @@ const ChatSection = (props: ChatSectionProps) => {
                     setShowLoader(true);
                   },
                 ]}
-                speed={{ type: "keyStrokeDelayInMs", value: 250 }}
+                speed={{ type: "keyStrokeDelayInMs", value: 350 }}
               />
               {showLoader && (
                 <SyncLoader

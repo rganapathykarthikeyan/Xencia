@@ -35,6 +35,7 @@ const BotChat = (props: BotChatProps) => {
             sequence={[props.chat.data]}
             cursor={false}
             repeat={0}
+            speed={60}
           />
         </div>
         {showOptions && (

@@ -31,7 +31,11 @@ const BotChat = (props: BotChatProps) => {
             setShowOptions((pre) => !pre);
           }}
         >
-          <TypeAnimation sequence={props.chat.data} cursor={false} />
+          <TypeAnimation
+            sequence={[props.chat.data]}
+            cursor={false}
+            repeat={0}
+          />
         </div>
         {showOptions && (
           <div className="flex flex-row w-full justify-end">

@@ -71,11 +71,11 @@ const ChatPage = () => {
 
     try {
       const response = await fetch(
-        "https://nextgengamingbot.azurewebsites.net/send_message",
+        "https://gameskraftwebappstream.azurewebsites.net/send_message",
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "text/event-stream",
           },
           body: JSON.stringify({ message: text }),
         }
@@ -83,6 +83,17 @@ const ChatPage = () => {
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
+      }
+
+      if (response.body) {
+        const reader = response.body
+          .pipeThrough(new TextDecoderStream())
+          .getReader();
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          console.log("Received: ", value);
+        }
       }
 
       const data = await response.json();

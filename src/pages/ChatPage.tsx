@@ -75,7 +75,7 @@ const ChatPage = () => {
         {
           method: "POST",
           headers: {
-            "Content-Type": "text/event-stream",
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({ message: text }),
         }

@@ -16,6 +16,7 @@ type BotChatProps = {
 
 const BotChat = (props: BotChatProps) => {
   const [showOptions, setShowOptions] = useState(false);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [date, setDate] = useState<Date>();
   const route = useNavigate();
   return (
@@ -73,7 +74,7 @@ const BotChat = (props: BotChatProps) => {
 
           {props.isLast && (
             <div>
-              <Popover>
+              <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant={"blueOutline"}
@@ -114,6 +115,7 @@ const BotChat = (props: BotChatProps) => {
                           if (props.setText) {
                             props.setText(e.toISOString().split("T")[0]);
                           }
+                          setIsCalendarOpen(false);
                         }
                       }}
                     />

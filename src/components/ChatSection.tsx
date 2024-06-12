@@ -55,7 +55,6 @@ const ChatSection = (props: ChatSectionProps) => {
                   setText={props.setText}
                   isLast={index === array.length - 1}
                 />
-                ;
               </div>
             );
           }

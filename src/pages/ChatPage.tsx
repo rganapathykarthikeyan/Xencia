@@ -43,7 +43,7 @@ const ChatPage = () => {
     if (!id) return;
 
     setIsRefreshing(true);
-    fetch("https://nextgengamingbot.azurewebsites.net/refreshed", {
+    fetch("https://gameskraftwebappstream.azurewebsites.net/refreshed", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

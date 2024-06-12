@@ -113,6 +113,9 @@ const BotChat = (props: BotChatProps) => {
                         if (e) {
                           setDate(e);
                           if (props.setText) {
+                            e.setMinutes(
+                              e.getMinutes() - e.getTimezoneOffset()
+                            );
                             props.setText(e.toISOString().split("T")[0]);
                           }
                           setIsCalendarOpen(false);

@@ -19,15 +19,24 @@ const ChatPage = () => {
   const findChatIndexbyID = chatList.findIndex((data) => data.id === id);
   const Chat = findChatIndexbyID !== -1 ? chatList[findChatIndexbyID] : null;
   const [disabled, setDisabled] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<{
+    id: string;
+    isloading: boolean;
+  }>({ id: "", isloading: false });
+  const [replyText, setReplyText] = useState("");
+
+  let reply = "";
 
   const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const [isStreaming, setIsStreaming] = useState<{
+    id: string;
+    isstreaming: boolean;
+  }>({ id: "", isstreaming: false });
 
   const [text, setText] = useState("");
 
   const dispatch = useDispatch();
-
-  console.log("From ChatPage : ", Chat);
 
   const onChangeChat = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
@@ -43,7 +52,7 @@ const ChatPage = () => {
     if (!id) return;
 
     setIsRefreshing(true);
-    fetch("https://nextgengamingbot.azurewebsites.net/refreshed", {
+    fetch("https://gameskraftwebappstream.azurewebsites.net/refreshed", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,6 +62,7 @@ const ChatPage = () => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
+        setReplyText("");
         dispatch(removeChat({ id }));
         return response.json();
       })
@@ -65,7 +75,7 @@ const ChatPage = () => {
     if (!id) return;
 
     setDisabled(true);
-    setIsLoading(true);
+    setIsLoading({ id, isloading: true });
 
     dispatch(addUserChat({ user: text, id }));
 
@@ -86,26 +96,29 @@ const ChatPage = () => {
       }
 
       if (response.body) {
+        setReplyText("");
+        setIsStreaming({ id, isstreaming: true });
         const reader = response.body
           .pipeThrough(new TextDecoderStream())
           .getReader();
         while (true) {
           const { value, done } = await reader.read();
-          if (done) break;
-          console.log("Received: ", value);
+          if (done) {
+            setIsStreaming({ id: "", isstreaming: false });
+            break;
+          }
+          reply = reply + value;
+          setReplyText((pre) => pre + value);
         }
       }
-
-      const data = await response.json();
-      const botText = data.ai_response;
-      dispatch(addBotChat({ bot: botText, id }));
     } catch (error) {
       console.error("Failed to send message:", error);
     } finally {
       setDisabled(false);
-      setIsLoading(false);
+      setIsLoading({ id: "", isloading: false });
+      dispatch(addBotChat({ bot: reply, id }));
+      reply = "";
     }
-
     setText("");
   };
 
@@ -148,8 +161,11 @@ const ChatPage = () => {
           >
             {Chat ? Chat.name : "title"}
           </span>
-          <a href="mailto:support@xencia.com" className="text-greyText text-sm">
-            support@xencia.com
+          <a
+            href="mailto:grievance.officer@gameskraft.com"
+            className="text-greyText text-sm"
+          >
+            grievance.officer@gameskraft.com
           </a>
         </div>
       </section>
@@ -161,6 +177,9 @@ const ChatPage = () => {
               isLoading={isLoading}
               isDark={isDark}
               isRefreshing={isRefreshing}
+              isStreaming={isStreaming}
+              replyText={replyText}
+              setText={setText}
             />
           )}
         </div>

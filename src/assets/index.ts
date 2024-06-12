@@ -1,9 +1,9 @@
 export const assets = {
   images: {
-    XenciaL: "/images/XenciaLogoLarge.png",
-    XenciaS: "/images/XenciaLogoSmall.png",
+    XenciaL: "/images/GameKraftLogoLarge.png",
+    XenciaS: "/images/GameKraftLogoSmall.png",
     avatar: "/images/avatar.png",
-    bot: "/images/bot.png",
+    bot: "/images/Bot.png",
   },
   icons: {
     menu: "/icons/menu.svg",

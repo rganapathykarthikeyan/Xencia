@@ -52,6 +52,7 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
             !isDark,
         }
       )}
+           style={{ background: 'linear-gradient(to top, #0000ff, #add8e6)' }}
     >
       {/* Header */}
       <section
@@ -76,8 +77,8 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
             <img
               src={assets.images.XenciaL}
               alt="logo"
-              height={90}
-              width={80}
+              height={260}
+              width={380}
             />
           ) : (
             <img
@@ -128,12 +129,12 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
 
       {/* Content */}
       <section
-        className={cn("p-5 flex-grow flex-col gap-8", {
+        className={cn("p-5 flex-grow flex-col gap-9", {
           hidden: collapse,
           flex: !collapse,
         })}
       >
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-5">
           <span className="text-xs font-bold">TODAY</span>
           {todayList.map((data) => {
             return (
@@ -151,7 +152,7 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
             );
           })}
         </div>
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-5">
           <span className="text-xs font-bold">PREVIOUSLY</span>
           {previousList.map((data) => {
             return (
@@ -169,7 +170,7 @@ const SideBarNavigation = (props: SideBarNavigationProps) => {
             );
           })}
         </div>
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-5">
           <span className="text-xs font-bold">HELP</span>
           {help.map((data) => {
             return (
